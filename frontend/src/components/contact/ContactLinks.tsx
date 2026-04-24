@@ -65,7 +65,7 @@ export function ContactLinks() {
                 key={item.label}
                 href={item.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 text-sm text-primary transition hover:bg-gray-50 hover:underline"
               >
                 <span className="inline-flex items-center gap-2">
