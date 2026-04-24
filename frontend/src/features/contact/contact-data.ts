@@ -1,18 +1,29 @@
+export type ContactLinkIcon = "github" | "qiita" | "blog" | "lab";
+
 export const contactLinks = [
   {
     label: "GitHub",
-    href: "#",
+    href: "https://github.com/kanade3256",
     external: true,
+    icon: "github",
+  },
+  {
+    label: "Qiita",
+    href: "https://qiita.com/kanade3256",
+    external: true,
+    icon: "qiita",
   },
   {
     label: "Blog",
     href: "/blog",
     external: false,
+    icon: "blog",
   },
   {
-    label: "Lab",
-    href: "/lab",
-    external: false,
+    label: "TransMediaTechLab",
+    href: "https://www.transmedia-tech-lab.jp/",
+    external: true,
+    icon: "lab",
   },
 ] as const;
 

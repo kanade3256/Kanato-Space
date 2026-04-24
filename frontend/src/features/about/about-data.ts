@@ -1,6 +1,9 @@
 export const aboutProfileParagraphs = [
-  "東京工科大学 コンピュータサイエンス学部で学びながら、Webアプリケーション開発、AWSを用いたバックエンド設計、研究活動に取り組んでいます。",
-  "現場の課題を起点に、設計・実装・運用改善まで考える開発を重視しています。",
+  "名前：Kanato Murayama",
+  "所属：東京工科大学 コンピュータサイエンス学部 人工知能専攻",
+  "（2023年4月〜2026年9月卒業予定）",
+  "所属研究室：Trans Media Tech Lab (中西研究室)",
+  "研究テーマ：MediaPipeを用いたSkeleton Time-seriesの分析と説明可能AIへの応用",
 ] as const;
 
 export const aboutSkills = [
@@ -24,7 +27,7 @@ export const aboutSkills = [
 
 export const aboutProjects = [
   {
-    title: "Komeda Portal",
+    title: "シフト提出WEBアプリケーション",
     description:
       "シフト提出や通知を支援するWebアプリケーション。現場の課題を起点に、LINE連携やAWS構成を含めて設計・改善しています。",
     linkLabel: "Labを見る",
@@ -50,5 +53,5 @@ export const aboutResearchKeywords = [
 export const aboutInterests = [
   "現場課題を起点にしたWeb開発",
   "AWSを用いた小規模サービス運用",
-  "時系列データと説明可能AI",
+  "AI",
 ] as const;
