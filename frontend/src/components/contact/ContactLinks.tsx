@@ -56,7 +56,7 @@ function LinkIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-const iconMap: Record<ContactLinkIcon, ComponentType<{ className?: string }>> = {
+const iconMap: Record<ContactLinkIcon, ComponentType<SVGProps<SVGSVGElement>>> = {
   github: GithubIcon,
   qiita: QiitaIcon,
   blog: BookIcon,
