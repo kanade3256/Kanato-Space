@@ -1,0 +1,32 @@
+# dependencies
+**/node_modules/
+**/.pnpm-store/
+
+# logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# build outputs
+**/.next/
+**/out/
+**/dist/
+**/build/
+**/coverage/
+**/*.tsbuildinfo
+
+# env files
+**/.env
+**/.env.*
+!**/.env.example
+
+# hosting
+**/.vercel/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# local mock assets
+mock_images/*.png

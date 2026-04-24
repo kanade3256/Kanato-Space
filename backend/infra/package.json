@@ -1,0 +1,16 @@
+{
+  "name": "@kanato-space/infra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Infrastructure as Code (CDK / Terraform)",
+  "scripts": {
+    "cdk:synth": "cdk synth",
+    "cdk:deploy": "cdk deploy",
+    "cdk:destroy": "cdk destroy"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0",
+    "typescript": "^5.0.0"
+  }
+}
