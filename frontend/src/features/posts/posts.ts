@@ -3,6 +3,7 @@ import path from "path";
 
 import matter from "gray-matter";
 import { remark } from "remark";
+import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
 import type { Post, PostType } from "@/types/post";
@@ -151,7 +152,7 @@ export async function getPostBySlug(type: PostType, slug: string): Promise<Post 
     return null;
   }
 
-  const result = await remark().use(remarkHtml, { sanitize: true }).process(post.content ?? "");
+  const result = await remark().use(remarkGfm).use(remarkHtml, { sanitize: true }).process(post.content ?? "");
 
   return {
     ...post,
