@@ -1,8 +1,8 @@
 ---
-title: "IIAI_Winter2025"
+title: "IIAI AAI 2025 Winter"
 date: "2026-04-26"
 type: "Lab"
-slug: "first-lab"
+slug: "IIAI_Winter2025"
 draft: false
 summary: "歩行データのクラスタリングとExplainable AIを組み合わせた研究が国際会議に採録され、IEEE Xploreに掲載されました。"
 tags: ["paper"]
