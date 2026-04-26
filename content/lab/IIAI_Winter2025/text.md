@@ -1,5 +1,5 @@
 ---
-title: "IIAI AAI 2025 Winter"
+title: "IIAI_Winter2025"
 date: "2026-04-26"
 type: "Lab"
 slug: "first-lab"
