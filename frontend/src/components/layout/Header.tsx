@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Container } from "@/components/ui/Container";
 
@@ -11,21 +14,35 @@ const navigationItems = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
+
   return (
-    <header className="sticky top-0 z-40 h-16 border-b border-border bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <Container className="h-full">
-        <div className="flex h-full items-center justify-between gap-3">
-          <Link href="/" className="shrink-0 text-lg font-semibold tracking-tight text-primary">
+    <header className="sticky top-0 z-40 border-b border-gray-100 bg-white">
+      <Container className="py-0">
+        <div className="flex h-16 items-center justify-between gap-3">
+          <Link href="/" className="shrink-0 text-lg font-bold tracking-tight text-slate-900">
             Kanato Space
           </Link>
 
           <div className="flex min-w-0 items-center gap-2">
-            <nav aria-label="Primary navigation" className="hidden items-center gap-5 text-sm text-secondary md:flex">
-              {navigationItems.map((item) => (
-                <Link key={item.label} href={item.href} className="whitespace-nowrap hover:text-primary hover:underline">
-                  {item.label}
-                </Link>
-              ))}
+            <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
+              {navigationItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`relative whitespace-nowrap text-sm font-medium transition-colors ${
+                      isActive ? "text-blue-600" : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600" />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>
