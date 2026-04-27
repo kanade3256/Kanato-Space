@@ -1,49 +1,168 @@
 import Link from "next/link";
-
-import { Container } from "@/components/ui/Container";
+import { Cloud, Zap, Brain } from "lucide-react";
 
 export function Hero() {
+  const features = [
+    {
+      icon: Cloud,
+      text: "AWS × LINE を活用した業務改革システム開発",
+    },
+    {
+      icon: Zap,
+      text: "歩行解析 × Explainable AI の研究に従事",
+    },
+    {
+      icon: Brain,
+      text: "実運用を想視した設計と安全を重視",
+    },
+  ];
+
   return (
-    <section className="py-20">
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+    <section className="relative overflow-hidden bg-[linear-gradient(120deg,#eef8ff_0%,#eee7ff_48%,#ffe7f5_100%)]">
+      <div className="mx-auto grid min-h-[520px] max-w-7xl grid-cols-1 items-center gap-12 px-8 py-20 lg:grid-cols-[0.9fr_1.1fr]">
+        {/* Left Content */}
+        <div className="space-y-8">
           <div className="space-y-6">
-            <h1 className="text-5xl font-bold tracking-[-0.02em] text-primary md:text-6xl">Kanato Space.</h1>
-            <p className="max-w-xl text-base text-secondary">
+            <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight">
+              Kanato Space.
+            </h1>
+            <p className="text-lg text-slate-700 leading-relaxed max-w-xl font-medium">
               技術で人の課題を解決するための試行錯誤と改善の記録
             </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/about"
-                className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-medium text-white transition hover:opacity-90"
-              >
-                About
-              </Link>
-              <Link
-                href="/lab"
-                className="inline-flex h-10 items-center rounded-lg border border-gray-200 px-4 text-sm font-medium text-primary transition hover:bg-gray-50"
-              >
-                Labを見る
-              </Link>
-              <Link href="#latest-updates" className="text-sm font-medium text-primary hover:underline">
-                最新の更新
-              </Link>
+          </div>
+
+          {/* Features with Icons */}
+          <div className="space-y-4 pt-2">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <div key={idx} className="flex items-start gap-4 group">
+                  <div className="flex-shrink-0 mt-1 bg-white/70 backdrop-blur-md rounded-xl p-2.5 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                    <Icon className="h-5 w-5 text-indigo-600" strokeWidth={2.5} />
+                  </div>
+                  <p className="text-base text-slate-700 leading-relaxed pt-0.5 font-medium">
+                    {feature.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] bg-slate-900 text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+            >
+              About
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <Link
+              href="/lab"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] bg-white/70 backdrop-blur-md text-slate-900 font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 border border-white/50 hover:bg-white/80"
+            >
+              Labを見る
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <Link
+              href="#latest-updates"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] text-slate-700 font-semibold hover:bg-white/60 transition-all duration-300"
+            >
+              最新の更新
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* Right Visual - 3D Sphere */}
+        <div className="relative hidden min-h-[440px] translate-x-[-20px] items-center justify-center lg:flex">
+          {/* Glow Light */}
+          <div className="absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/20 blur-3xl" />
+
+          {/* Orbital Lines */}
+          <div className="absolute left-1/2 top-1/2 h-[300px] w-[620px] -translate-x-1/2 -translate-y-1/2 rotate-[-12deg] rounded-full border border-white/60" />
+          <div className="absolute left-1/2 top-1/2 h-[230px] w-[560px] -translate-x-1/2 -translate-y-1/2 rotate-[16deg] rounded-full border border-white/45" />
+          <div className="absolute left-1/2 top-1/2 h-[360px] w-[680px] -translate-x-1/2 -translate-y-1/2 rotate-[8deg] rounded-full border border-white/35" />
+
+          {/* Orbital Light Points */}
+          <span className="absolute left-[20%] top-[42%] h-3 w-3 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
+          <span className="absolute right-[18%] top-[28%] h-2.5 w-2.5 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.8)]" />
+          <span className="absolute right-[28%] bottom-[22%] h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
+
+          {/* 3D Sphere */}
+          <div className="relative h-[260px] w-[260px]">
+            {/* Back glow */}
+            <div className="absolute inset-[-34px] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(96,165,250,0.36)_0%,rgba(168,85,247,0.22)_38%,rgba(255,255,255,0)_72%)] blur-2xl" />
+
+            {/* Soft white atmosphere */}
+            <div className="absolute inset-[-18px] rounded-full bg-white/25 blur-xl" />
+
+            {/* Sphere body with white circumference */}
+            <div className="absolute inset-0 overflow-hidden rounded-full bg-white/75 p-[1.5px] shadow-[0_22px_70px_rgba(99,102,241,0.28)]">
+              <div className="relative h-full w-full overflow-hidden rounded-full bg-[radial-gradient(circle_at_32%_28%,rgba(255,255,255,0.92)_0%,rgba(191,239,255,0.72)_10%,rgba(56,189,248,0.95)_25%,rgba(14,165,233,1)_42%,rgba(37,99,235,1)_62%,rgba(124,58,237,0.96)_78%,rgba(217,70,239,0.9)_100%)] shadow-[inset_-34px_-30px_48px_rgba(88,28,135,0.28),inset_22px_20px_36px_rgba(255,255,255,0.22)]">
+              {/* Large soft highlight */}
+              <div className="absolute left-[18%] top-[14%] h-[38%] w-[42%] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.28)_34%,rgba(255,255,255,0)_72%)] blur-[6px]" />
+
+              {/* Blue glass layer */}
+              <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_48%_42%,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.04)_36%,rgba(255,255,255,0)_70%)]" />
+
+              {/* Right bottom color depth */}
+              <div className="absolute bottom-[-10%] right-[-8%] h-[58%] w-[58%] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.58)_0%,rgba(217,70,239,0.32)_38%,rgba(217,70,239,0)_72%)] blur-[8px]" />
+
+              {/* Edge transition to softly blend white rim into inner colors */}
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0)_62%,rgba(255,255,255,0.06)_72%,rgba(255,255,255,0.12)_80%,rgba(255,255,255,0.2)_88%,rgba(255,255,255,0.3)_94%,rgba(255,255,255,0.38)_100%)]" />
+
+              {/* Rim light */}
+              <div className="absolute inset-0 rounded-full ring-1 ring-white/60" />
+              </div>
             </div>
           </div>
 
-          <div aria-hidden="true" className="rounded-2xl border border-gray-200 bg-gray-50/50 p-6">
-            <svg viewBox="0 0 420 280" className="h-full w-full text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="24" y="24" width="372" height="232" rx="16" stroke="currentColor" strokeOpacity="0.35" />
-              <path d="M80 210L160 70L250 190L330 80" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
-              <path d="M80 80H340M80 120H340M80 160H340M80 200H340" stroke="currentColor" strokeOpacity="0.18" />
-              <path d="M100 60L180 40L260 60L260 140L180 160L100 140Z" stroke="currentColor" strokeOpacity="0.5" />
-              <circle cx="112" cy="210" r="22" stroke="currentColor" strokeOpacity="0.45" />
-              <circle cx="112" cy="210" r="38" stroke="currentColor" strokeOpacity="0.22" />
-              <circle cx="312" cy="188" r="12" stroke="currentColor" strokeOpacity="0.45" />
-            </svg>
+          {/* Labels */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Development */}
+            <div className="absolute top-6 left-8" style={{ animation: "float-subtle 3s ease-in-out infinite" }}>
+              <div className="bg-white/80 backdrop-blur-md rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-slate-900 whitespace-nowrap">
+                Development
+              </div>
+            </div>
+
+            {/* Data Analysis */}
+            <div className="absolute top-12 right-6" style={{ animation: "float-subtle 3s ease-in-out infinite 0.5s" }}>
+              <div className="bg-white/80 backdrop-blur-md rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-slate-900 whitespace-nowrap">
+                Data Analysis
+              </div>
+            </div>
+
+            {/* Automation */}
+            <div className="absolute bottom-20 right-12" style={{ animation: "float-subtle 3s ease-in-out infinite 1s" }}>
+              <div className="bg-white/80 backdrop-blur-md rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-slate-900 whitespace-nowrap">
+                Automation
+              </div>
+            </div>
+
+            {/* Cloud */}
+            <div className="absolute bottom-8 right-4" style={{ animation: "float-subtle 3s ease-in-out infinite 1.5s" }}>
+              <div className="bg-white/80 backdrop-blur-md rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-slate-900 whitespace-nowrap">
+                Cloud
+              </div>
+            </div>
+
+            {/* AI / Research */}
+            <div className="absolute bottom-12 left-8" style={{ animation: "float-subtle 3s ease-in-out infinite 2s" }}>
+              <div className="bg-white/80 backdrop-blur-md rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-slate-900 whitespace-nowrap">
+                AI / Research
+              </div>
+            </div>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

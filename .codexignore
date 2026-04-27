@@ -1,0 +1,26 @@
+# Generated dependencies and build outputs
+node_modules/
+**/node_modules/
+.pnpm-store/
+.next/
+out/
+dist/
+build/
+coverage/
+**/*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Hosting and local cache artifacts
+.vercel/
+.turbo/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Local reference assets
+mock_images/
