@@ -81,7 +81,7 @@ export function Hero() {
         </div>
 
         {/* Right Visual - 3D Sphere */}
-        <div className="relative hidden min-h-[440px] items-center justify-center lg:flex">
+        <div className="relative hidden min-h-[440px] translate-x-[-20px] items-center justify-center lg:flex">
           {/* Glow Light */}
           <div className="absolute left-1/2 top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/20 blur-3xl" />
 
@@ -96,21 +96,32 @@ export function Hero() {
           <span className="absolute right-[28%] bottom-[22%] h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,0.9)]" />
 
           {/* 3D Sphere */}
-          <div className="relative h-[240px] w-[240px] rounded-full">
-            {/* Outer glow layer (air feel - furthest) */}
-            <div className="absolute inset-[-20%] rounded-full bg-white/20 blur-3xl" />
-            
-            {/* Middle glow layer (soft air) */}
-            <div className="absolute inset-[-12%] rounded-full bg-white/40 blur-2xl" />
-            
-            {/* Main sphere gradient */}
-            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,#dbeafe_0%,#93c5fd_18%,#3b82f6_42%,#6366f1_65%,#a78bfa_85%,#f0abfc_100%)] shadow-[0_10px_40px_rgba(99,102,241,0.15)]" />
-            
-            {/* Subtle highlight (soft, weak) */}
-            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.35),transparent_40%)]" />
-            
-            {/* Inner rim */}
-            <div className="absolute inset-[10%] rounded-full border border-white/15" />
+          <div className="relative h-[260px] w-[260px]">
+            {/* Back glow */}
+            <div className="absolute inset-[-34px] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(96,165,250,0.36)_0%,rgba(168,85,247,0.22)_38%,rgba(255,255,255,0)_72%)] blur-2xl" />
+
+            {/* Soft white atmosphere */}
+            <div className="absolute inset-[-18px] rounded-full bg-white/25 blur-xl" />
+
+            {/* Sphere body with white circumference */}
+            <div className="absolute inset-0 overflow-hidden rounded-full bg-white/75 p-[1.5px] shadow-[0_22px_70px_rgba(99,102,241,0.28)]">
+              <div className="relative h-full w-full overflow-hidden rounded-full bg-[radial-gradient(circle_at_32%_28%,rgba(255,255,255,0.92)_0%,rgba(191,239,255,0.72)_10%,rgba(56,189,248,0.95)_25%,rgba(14,165,233,1)_42%,rgba(37,99,235,1)_62%,rgba(124,58,237,0.96)_78%,rgba(217,70,239,0.9)_100%)] shadow-[inset_-34px_-30px_48px_rgba(88,28,135,0.28),inset_22px_20px_36px_rgba(255,255,255,0.22)]">
+              {/* Large soft highlight */}
+              <div className="absolute left-[18%] top-[14%] h-[38%] w-[42%] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.28)_34%,rgba(255,255,255,0)_72%)] blur-[6px]" />
+
+              {/* Blue glass layer */}
+              <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_48%_42%,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.04)_36%,rgba(255,255,255,0)_70%)]" />
+
+              {/* Right bottom color depth */}
+              <div className="absolute bottom-[-10%] right-[-8%] h-[58%] w-[58%] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.58)_0%,rgba(217,70,239,0.32)_38%,rgba(217,70,239,0)_72%)] blur-[8px]" />
+
+              {/* Edge transition to softly blend white rim into inner colors */}
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0)_62%,rgba(255,255,255,0.06)_72%,rgba(255,255,255,0.12)_80%,rgba(255,255,255,0.2)_88%,rgba(255,255,255,0.3)_94%,rgba(255,255,255,0.38)_100%)]" />
+
+              {/* Rim light */}
+              <div className="absolute inset-0 rounded-full ring-1 ring-white/60" />
+              </div>
+            </div>
           </div>
 
           {/* Labels */}
