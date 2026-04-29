@@ -15,6 +15,13 @@ const navigationItems = [
 
 export function Header() {
   const pathname = usePathname();
+  const isNavItemActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-gray-100 bg-white">
@@ -27,7 +34,7 @@ export function Header() {
           <div className="flex min-w-0 items-center gap-2">
             <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
               {navigationItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = isNavItemActive(item.href);
                 return (
                   <Link
                     key={item.label}

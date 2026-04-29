@@ -26,7 +26,14 @@ export function SectionCards() {
                   className="mt-8 inline-flex text-sm font-semibold text-indigo-600 hover:text-indigo-700 hover:gap-2 gap-1 transition-all"
                 >
                   {card.title}へ
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>

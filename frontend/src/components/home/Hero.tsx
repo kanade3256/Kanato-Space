@@ -38,7 +38,7 @@ export function Hero() {
               return (
                 <div key={idx} className="flex items-start gap-4 group">
                   <div className="flex-shrink-0 mt-1 bg-white/70 backdrop-blur-md rounded-xl p-2.5 shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                    <Icon className="h-5 w-5 text-indigo-600" strokeWidth={2.5} />
+                    <Icon className="h-5 w-5 text-indigo-600" strokeWidth={2.5} aria-hidden="true" focusable="false" />
                   </div>
                   <p className="text-base text-slate-700 leading-relaxed pt-0.5 font-medium">
                     {feature.text}
@@ -55,7 +55,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] bg-slate-900 text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
             >
               About
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
@@ -64,7 +64,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] bg-white/70 backdrop-blur-md text-slate-900 font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 border border-white/50 hover:bg-white/80"
             >
               Labを見る
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
@@ -73,7 +73,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-7 py-3 rounded-[12px] text-slate-700 font-semibold hover:bg-white/60 transition-all duration-300"
             >
               最新の更新
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg aria-hidden="true" focusable="false" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
