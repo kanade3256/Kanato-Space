@@ -6,10 +6,11 @@ import { SectionCards } from "@/components/home/SectionCards";
 import { WhyBuild } from "@/components/home/WhyBuild";
 
 export const metadata: Metadata = {
-  title: "Kanato Space | 技術の実験場",
-  description: "Kanato Space は、技術の実験場・ポートフォリオ・成長ログを兼ねる個人サイトです。",
+  title: "Murayama Kanato | Kanato Space",
+  description:
+    "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
   alternates: {
-    canonical: "/",
+    canonical: "https://kanato-space.com/",
   },
 };
 

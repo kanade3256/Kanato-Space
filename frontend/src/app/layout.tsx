@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { siteDescription, siteName, siteTitle, siteUrl } from "@/lib/site";
+import { siteName, siteUrl } from "@/lib/site";
 
 import "./globals.css";
 
@@ -23,16 +23,16 @@ const notoSansJp = Noto_Sans_JP({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Kanato Space | 技術の実験場",
+    default: "Kanato Space",
     template: "%s | Kanato Space",
   },
-  description: siteDescription,
+  description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
+    title: "Kanato Space",
+    description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
     url: siteUrl,
     siteName,
     locale: "ja_JP",
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
+    title: "Kanato Space",
+    description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
   },
 };
 
