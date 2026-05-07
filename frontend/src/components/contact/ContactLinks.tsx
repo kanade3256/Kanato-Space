@@ -38,15 +38,6 @@ function QiitaIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function BookIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <IconBase {...props}>
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-    </IconBase>
-  );
-}
-
 function LinkIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props}>
@@ -59,7 +50,7 @@ function LinkIcon(props: SVGProps<SVGSVGElement>) {
 const iconMap: Record<ContactLinkIcon, ComponentType<SVGProps<SVGSVGElement>>> = {
   github: GithubIcon,
   qiita: QiitaIcon,
-  blog: BookIcon,
+  wantedly: LinkIcon,
   lab: LinkIcon,
 };
 
