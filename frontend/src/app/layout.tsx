@@ -26,13 +26,14 @@ export const metadata: Metadata = {
     default: "Kanato Space",
     template: "%s | Kanato Space",
   },
-  description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
+  description:
+    "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Kanato Space",
-    description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
+    description: "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
     url: siteUrl,
     siteName,
     locale: "ja_JP",
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Kanato Space",
-    description: "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
+    description: "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
   },
 };
 

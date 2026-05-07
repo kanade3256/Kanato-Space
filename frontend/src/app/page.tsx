@@ -8,9 +8,9 @@ import { WhyBuild } from "@/components/home/WhyBuild";
 export const metadata: Metadata = {
   title: "Murayama Kanato | Kanato Space",
   description:
-    "Murayama Kanato のポートフォリオサイト。自分の研究や趣味などの活動をまとめています。",
+    "Murayama Kanato のポートフォリオサイト。研究、開発、AWSを用いたWebアプリ開発、AIを活用した歩行解析などの活動をまとめています。",
   alternates: {
-    canonical: "https://kanato-space.com/",
+    canonical: "/",
   },
 };
 
