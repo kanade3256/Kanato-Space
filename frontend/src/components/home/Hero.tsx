@@ -26,6 +26,9 @@ export function Hero() {
             <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight">
               Kanato Space.
             </h1>
+            <p className="text-xl text-slate-600 font-bold tracking-wide">
+              Murayama Kanato
+            </p>
             <p className="text-lg text-slate-700 leading-relaxed max-w-xl font-medium">
               技術で人の課題を解決するための試行錯誤と改善の記録
             </p>

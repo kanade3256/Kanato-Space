@@ -15,8 +15,27 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Murayama Kanato",
+    url: "https://kanato-space.com",
+    description:
+      "Murayama Kanato のポートフォリオサイト。研究、開発、AWSを用いたWebアプリ開発、AIを活用した歩行解析などの活動をまとめています。",
+    jobTitle: "Software Engineer / Researcher",
+    sameAs: [
+      "https://github.com/kanade3256",
+      "https://qiita.com/kanade3256",
+      "https://www.wantedly.com/id/murayama_kanato",
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Hero />
       <SectionCards />
       <LatestUpdates />
