@@ -23,7 +23,7 @@ const notoSansJp = Noto_Sans_JP({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Kanato Space | 技術の実験場",
+    default: "Kanato Space",
     template: "%s | Kanato Space",
   },
   description: siteDescription,

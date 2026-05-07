@@ -6,8 +6,9 @@ import { SectionCards } from "@/components/home/SectionCards";
 import { WhyBuild } from "@/components/home/WhyBuild";
 
 export const metadata: Metadata = {
-  title: "Kanato Space | 技術の実験場",
-  description: "Kanato Space は、技術の実験場・ポートフォリオ・成長ログを兼ねる個人サイトです。",
+  title: "Murayama Kanato",
+  description:
+    "Murayama Kanato のポートフォリオサイト。研究、開発、AWSを用いたWebアプリ開発、AIを活用した歩行解析などの活動をまとめています。",
   alternates: {
     canonical: "/",
   },
