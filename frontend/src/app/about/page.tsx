@@ -10,7 +10,7 @@ import { SkillsSection } from "@/components/about/SkillsSection";
 
 export const metadata: Metadata = {
   title: "About | Kanato Space",
-  description: "Kanato Space の運営者について。経歴、スキル、研究、開発プロジェクトをまとめています。",
+  description: "Murayama Kanato について。経歴、スキル、研究、開発プロジェクトをまとめています。",
   alternates: {
     canonical: "/about",
   },
