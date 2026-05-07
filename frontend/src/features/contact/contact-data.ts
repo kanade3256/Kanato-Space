@@ -1,4 +1,4 @@
-export type ContactLinkIcon = "github" | "qiita" | "blog" | "lab";
+export type ContactLinkIcon = "github" | "qiita" | "wantedly" | "lab";
 
 export const contactLinks = [
   {
@@ -14,10 +14,10 @@ export const contactLinks = [
     icon: "qiita",
   },
   {
-    label: "Blog",
-    href: "/blog",
-    external: false,
-    icon: "blog",
+    label: "Wantedly",
+    href: "https://www.wantedly.com/id/murayama_kanato",
+    external: true,
+    icon: "wantedly",
   },
   {
     label: "TransMediaTechLab",
