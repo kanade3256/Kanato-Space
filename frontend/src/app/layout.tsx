@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { siteName, siteUrl } from "@/lib/site";
+import { siteDescription, siteName, siteTitle, siteUrl } from "@/lib/site";
 
 import "./globals.css";
 
@@ -26,14 +26,13 @@ export const metadata: Metadata = {
     default: "Kanato Space",
     template: "%s | Kanato Space",
   },
-  description:
-    "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
+  description: siteDescription,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Kanato Space",
-    description: "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
+    title: siteTitle,
+    description: siteDescription,
     url: siteUrl,
     siteName,
     locale: "ja_JP",
@@ -41,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kanato Space",
-    description: "Murayama Kanato のポートフォリオサイト。研究、開発、成長ログをまとめています。",
+    title: siteTitle,
+    description: siteDescription,
   },
 };
 
