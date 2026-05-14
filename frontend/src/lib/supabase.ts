@@ -1,13 +1,15 @@
+import { createBrowserClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
-let browserClient: ReturnType<typeof createClient> | null = null;
+let browserClient: ReturnType<typeof createBrowserClient> | null = null;
 
 /**
  * クライアント側用 Supabase クライアント（匿名キー）
+ * @supabase/ssr を使用してセッションを HttpOnly Cookie で管理
  */
 export const getSupabaseBrowserClient = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -15,7 +17,7 @@ export const getSupabaseBrowserClient = () => {
   }
 
   if (!browserClient) {
-    browserClient = createClient(supabaseUrl, supabaseAnonKey);
+    browserClient = createBrowserClient(supabaseUrl, supabaseAnonKey);
   }
 
   return browserClient;

@@ -18,15 +18,26 @@ type CookieToSet = {
 };
 
 /**
- * 管理者認証をチェック
+ * 管理者認証をチェック（Authorization ヘッダーから Bearer token を取得）
  */
 async function checkAdminAuth(request: NextRequest): Promise<{ email: string } | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
+    console.log("checkAdminAuth: Missing Supabase config");
     return null;
   }
+
+  // Authorization ヘッダーから Bearer token を取得
+  const authHeader = request.headers.get("Authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    console.log("checkAdminAuth: No Bearer token in Authorization header");
+    return null;
+  }
+
+  const token = authHeader.substring(7); // "Bearer " を削除
+  console.log("checkAdminAuth: Token received from Authorization header");
 
   const response = NextResponse.next();
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -42,14 +53,27 @@ async function checkAdminAuth(request: NextRequest): Promise<{ email: string } |
     },
   });
 
+  // Bearer token を使ってユーザー情報を取得
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+    error,
+  } = await supabase.auth.getUser(token);
 
-  if (!user?.email || !isAdminEmail(user.email)) {
+  if (error) {
+    console.log("checkAdminAuth: Auth error:", error.message);
+  }
+
+  if (!user) {
+    console.log("checkAdminAuth: No user found with token");
     return null;
   }
 
+  if (!isAdminEmail(user.email)) {
+    console.log(`checkAdminAuth: User ${user.email} is not admin`);
+    return null;
+  }
+
+  console.log(`checkAdminAuth: Admin user authenticated: ${user.email}`);
   return { email: user.email };
 }
 
@@ -57,11 +81,14 @@ async function checkAdminAuth(request: NextRequest): Promise<{ email: string } |
  * 会社別アクセス数ランキング
  */
 export async function GET(request: NextRequest) {
+  console.log("[/api/admin/analytics] GET called");
   const adminUser = await checkAdminAuth(request);
 
   if (!adminUser) {
+    console.log("[/api/admin/analytics] Unauthorized - no admin user");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  console.log(`[/api/admin/analytics] Authorized for: ${adminUser.email}`);
 
   try {
     const supabase = getSupabaseAdminClient();

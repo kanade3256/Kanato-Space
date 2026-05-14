@@ -35,6 +35,16 @@ export default function LoginPage() {
       return;
     }
 
+    // サーバー側セッション設定エンドポイント呼び出し
+    try {
+      const response = await fetch("/api/auth/callback", { method: "POST" });
+      if (!response.ok) {
+        console.error("Failed to establish server session");
+      }
+    } catch (err) {
+      console.error("Session callback error:", err);
+    }
+
     router.replace("/admin/analytics");
   };
 
@@ -50,7 +60,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/admin/analytics`,
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=/admin/analytics`,
       },
     });
 

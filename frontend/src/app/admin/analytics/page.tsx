@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 interface CompanyAccess {
   name: string;
@@ -47,32 +48,75 @@ export default function AdminAnalyticsPage() {
         setLoading(true);
         setError(null);
 
+        // localStorage から access_token を取得（Supabase SSR パターン）
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (!supabaseUrl) {
+          throw new Error("Supabase URL not configured");
+        }
+
+        // project ID を抽出（https://xxx.supabase.co → xxx）
+        const projectId = new URL(supabaseUrl).hostname.split(".")[0];
+        const authTokenKey = `sb-${projectId}-auth-token`;
+        
+        // localStorage の全キーをログ
+        console.log("[Analytics] Available localStorage keys:", Object.keys(localStorage));
+        console.log("[Analytics] Looking for key:", authTokenKey);
+        
+        const authToken = localStorage.getItem(authTokenKey);
+        console.log("[Analytics] Auth token found:", !!authToken);
+        
+        if (!authToken) {
+          // 別の形式を試す
+          const fallbackKey = `sb-${projectId}-auth-token-code-verifier`;
+          const allKeys = Object.keys(localStorage).filter(k => k.includes('auth') || k.includes('sb'));
+          console.log("[Analytics] Alternative keys found:", allKeys);
+          throw new Error("Not authenticated - no auth token in localStorage");
+        }
+
+        let parsed;
+        try {
+          parsed = JSON.parse(authToken);
+          console.log("[Analytics] Parsed auth token:", { hasAccessToken: !!parsed.access_token });
+        } catch (e) {
+          console.error("[Analytics] Failed to parse auth token:", e);
+          throw new Error("Invalid auth token format");
+        }
+        
+        // Supabase SSR の createBrowserClient は session.access_token ではなく
+        // 直接 access_token を保存する
+        const token = parsed?.access_token;
+
+        const headers = {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        };
+
         // 統計情報取得
-        const statsRes = await fetch("/api/admin/analytics");
+        const statsRes = await fetch("/api/admin/analytics", { headers });
         if (!statsRes.ok) throw new Error("Failed to fetch stats");
         const statsData = await statsRes.json();
         setStats(statsData.data);
 
         // 会社別ランキング取得
-        const companiesRes = await fetch("/api/admin/analytics?query=top-companies");
+        const companiesRes = await fetch("/api/admin/analytics?query=top-companies", { headers });
         if (!companiesRes.ok) throw new Error("Failed to fetch companies");
         const companiesData = await companiesRes.json();
         setTopCompanies(companiesData.data);
 
         // 最新アクセス取得
-        const latestRes = await fetch("/api/admin/analytics?query=latest");
+        const latestRes = await fetch("/api/admin/analytics?query=latest", { headers });
         if (!latestRes.ok) throw new Error("Failed to fetch latest");
         const latestData = await latestRes.json();
         setLatestAccess(latestData.data);
 
         // ページ別アクセス取得
-        const pageRes = await fetch("/api/admin/analytics?query=by-page");
+        const pageRes = await fetch("/api/admin/analytics?query=by-page", { headers });
         if (!pageRes.ok) throw new Error("Failed to fetch page stats");
         const pageData = await pageRes.json();
         setPageAccess(pageData.data);
 
         // 国別アクセス取得
-        const countryRes = await fetch("/api/admin/analytics?query=by-country");
+        const countryRes = await fetch("/api/admin/analytics?query=by-country", { headers });
         if (!countryRes.ok) throw new Error("Failed to fetch country stats");
         const countryData = await countryRes.json();
         setCountryAccess(countryData.data);

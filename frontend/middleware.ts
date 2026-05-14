@@ -50,11 +50,13 @@ export async function middleware(request: NextRequest) {
       } = await supabase.auth.getUser();
 
       if (error || !user) {
+        console.log("Middleware: No user found, redirecting to login");
         return NextResponse.redirect(new URL("/auth/login", request.url));
       }
 
       // 管理者メールであるか確認
       if (!isAdminEmail(user.email)) {
+        console.log(`Middleware: User ${user.email} is not admin, redirecting to unauthorized`);
         return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
 
