@@ -37,12 +37,35 @@ export default function LoginPage() {
 
     // サーバー側セッション設定エンドポイント呼び出し
     try {
-      const response = await fetch("/api/auth/callback", { method: "POST" });
-      if (!response.ok) {
-        console.error("Failed to establish server session");
+      // localStorage から access_token を取得
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      if (supabaseUrl) {
+        const projectId = new URL(supabaseUrl).hostname.split(".")[0];
+        const authTokenKey = `sb-${projectId}-auth-token`;
+        const authToken = localStorage.getItem(authTokenKey);
+        
+        if (authToken) {
+          const parsed = JSON.parse(authToken);
+          const token = parsed?.access_token;
+          
+          if (token) {
+            console.log("[LoginPage] Sending Bearer token to /api/auth/callback");
+            const response = await fetch("/api/auth/callback", {
+              method: "POST",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+              },
+            });
+            if (!response.ok) {
+              console.error("[LoginPage] Failed to establish server session:", response.status);
+            } else {
+              console.log("[LoginPage] Server session established");
+            }
+          }
+        }
       }
     } catch (err) {
-      console.error("Session callback error:", err);
+      console.error("[LoginPage] Session callback error:", err);
     }
 
     router.replace("/admin/analytics");

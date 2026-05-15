@@ -11,12 +11,34 @@ export async function POST(request: NextRequest) {
 
   try {
     const supabase = createRouteHandlerClient({ cookies });
+    
+    // Authorization ヘッダーから Bearer token を取得（ブラウザ側の新しいセッション用）
+    const authHeader = request.headers.get("Authorization");
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.substring(7);
+      console.log("[POST /api/auth/callback] Bearer token found in Authorization header");
+      
+      // Bearer token からユーザー情報を取得
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser(token);
+      
+      if (error || !user) {
+        console.log("[POST /api/auth/callback] Bearer token validation failed:", error?.message);
+      } else {
+        console.log(`[POST /api/auth/callback] Bearer token validated for user: ${user.email}`);
+        return NextResponse.json({ ok: true, user: user.email });
+      }
+    }
+
+    // Bearer token がない場合は、サーバー Cookie からセッションを試す
     const {
       data: { session },
     } = await supabase.auth.getSession();
 
     if (!session) {
-      console.log("[POST /api/auth/callback] No session found");
+      console.log("[POST /api/auth/callback] No session found in Cookie or Bearer token");
       return NextResponse.json({ error: "No session" }, { status: 401 });
     }
 

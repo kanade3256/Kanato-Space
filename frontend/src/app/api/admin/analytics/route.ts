@@ -59,8 +59,11 @@ async function checkAdminAuth(request: NextRequest): Promise<{ email: string } |
     error,
   } = await supabase.auth.getUser(token);
 
+  console.log("checkAdminAuth: getUser response:", { hasUser: !!user, error: error?.message });
+  
   if (error) {
     console.log("checkAdminAuth: Auth error:", error.message);
+    console.log("checkAdminAuth: Full error object:", JSON.stringify(error, null, 2));
   }
 
   if (!user) {
@@ -68,8 +71,11 @@ async function checkAdminAuth(request: NextRequest): Promise<{ email: string } |
     return null;
   }
 
+  console.log("checkAdminAuth: User email from token:", user.email);
+
   if (!isAdminEmail(user.email)) {
     console.log(`checkAdminAuth: User ${user.email} is not admin`);
+    console.log("checkAdminAuth: Admin emails configured:", process.env.ADMIN_EMAILS);
     return null;
   }
 

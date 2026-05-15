@@ -85,14 +85,66 @@ export default function AdminAnalyticsPage() {
         // Supabase SSR の createBrowserClient は session.access_token ではなく
         // 直接 access_token を保存する
         const token = parsed?.access_token;
+        console.log("[Analytics] Token value:", token ? token.substring(0, 30) + "..." : "null/undefined");
 
         const headers = {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         };
+        console.log("[Analytics] Authorization header:", headers.Authorization ? headers.Authorization.substring(0, 50) + "..." : "missing");
+
+        // token が期限切れなら、refresh を試みる
+        const ensureValidToken = async (): Promise<string> => {
+          // ダミー呼び出しで token を検証
+          const testRes = await fetch("/api/admin/analytics", { 
+            headers,
+          });
+          
+          if (testRes.status === 401) {
+            console.log("[Analytics] Token expired, attempting refresh...");
+            
+            // ブラウザ side で Supabase client を使ってリフレッシュ
+            try {
+              const supabase = getSupabaseBrowserClient();
+              const { data, error } = await supabase.auth.refreshSession();
+              
+              if (error || !data.session) {
+                console.error("[Analytics] Refresh failed:", error?.message);
+                throw new Error("Token refresh failed - please login again");
+              }
+              
+              const newToken = data.session.access_token;
+              console.log("[Analytics] Token refreshed successfully");
+              
+              // localStorage を更新
+              const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+              if (supabaseUrl) {
+                const projectId = new URL(supabaseUrl).hostname.split(".")[0];
+                const authTokenKey = `sb-${projectId}-auth-token`;
+                const authToken = localStorage.getItem(authTokenKey);
+                if (authToken) {
+                  const parsed = JSON.parse(authToken);
+                  parsed.access_token = newToken;
+                  localStorage.setItem(authTokenKey, JSON.stringify(parsed));
+                }
+              }
+              
+              return newToken;
+            } catch (err) {
+              console.error("[Analytics] Refresh error:", err);
+              throw new Error("Token refresh failed - please login again");
+            }
+          }
+          
+          return token;
+        };
+
+        const validToken = await ensureValidToken();
+        headers.Authorization = `Bearer ${validToken}`;
 
         // 統計情報取得
         const statsRes = await fetch("/api/admin/analytics", { headers });
+        console.log("[Analytics] Stats response status:", statsRes.status);
         if (!statsRes.ok) throw new Error("Failed to fetch stats");
         const statsData = await statsRes.json();
         setStats(statsData.data);
