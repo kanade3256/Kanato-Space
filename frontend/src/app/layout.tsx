@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { siteDescription, siteName, siteTitle, siteUrl } from "@/lib/site";
 
 import "./globals.css";
@@ -62,7 +62,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-          <Analytics />
+          <AnalyticsTracker />
         </div>
       </body>
     </html>
