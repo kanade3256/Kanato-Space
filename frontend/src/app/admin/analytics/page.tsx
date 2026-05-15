@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 interface CompanyAccess {
@@ -34,6 +35,7 @@ interface AccessLog {
 }
 
 export default function AdminAnalyticsPage() {
+  const router = useRouter();
   const [topCompanies, setTopCompanies] = useState<CompanyAccess[]>([]);
   const [latestAccess, setLatestAccess] = useState<AccessLog[]>([]);
   const [pageAccess, setPageAccess] = useState<PageAccess[]>([]);
@@ -48,98 +50,21 @@ export default function AdminAnalyticsPage() {
         setLoading(true);
         setError(null);
 
-        // localStorage から access_token を取得（Supabase SSR パターン）
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        if (!supabaseUrl) {
-          throw new Error("Supabase URL not configured");
+        // Supabase のセッションを取得
+        const supabase = getSupabaseBrowserClient();
+        const { data, error: sessionError } = await supabase.auth.getSession();
+
+        if (sessionError || !data.session) {
+          console.log("[Analytics] No session found, redirecting to login");
+          router.replace("/auth/login");
+          return;
         }
 
-        // project ID を抽出（https://xxx.supabase.co → xxx）
-        const projectId = new URL(supabaseUrl).hostname.split(".")[0];
-        const authTokenKey = `sb-${projectId}-auth-token`;
-        
-        // localStorage の全キーをログ
-        console.log("[Analytics] Available localStorage keys:", Object.keys(localStorage));
-        console.log("[Analytics] Looking for key:", authTokenKey);
-        
-        const authToken = localStorage.getItem(authTokenKey);
-        console.log("[Analytics] Auth token found:", !!authToken);
-        
-        if (!authToken) {
-          // 別の形式を試す
-          const allKeys = Object.keys(localStorage).filter(k => k.includes('auth') || k.includes('sb'));
-          console.log("[Analytics] Alternative keys found:", allKeys);
-          throw new Error("Not authenticated - no auth token in localStorage");
-        }
-
-        let parsed;
-        try {
-          parsed = JSON.parse(authToken);
-          console.log("[Analytics] Parsed auth token:", { hasAccessToken: !!parsed.access_token });
-        } catch (e) {
-          console.error("[Analytics] Failed to parse auth token:", e);
-          throw new Error("Invalid auth token format");
-        }
-        
-        // Supabase SSR の createBrowserClient は session.access_token ではなく
-        // 直接 access_token を保存する
-        const token = parsed?.access_token;
-        console.log("[Analytics] Token value:", token ? token.substring(0, 30) + "..." : "null/undefined");
-
+        const token = data.session.access_token;
         const headers = {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         };
-        console.log("[Analytics] Authorization header:", headers.Authorization ? headers.Authorization.substring(0, 50) + "..." : "missing");
-
-        // token が期限切れなら、refresh を試みる
-        const ensureValidToken = async (): Promise<string> => {
-          // ダミー呼び出しで token を検証
-          const testRes = await fetch("/api/admin/analytics", { 
-            headers,
-          });
-          
-          if (testRes.status === 401) {
-            console.log("[Analytics] Token expired, attempting refresh...");
-            
-            // ブラウザ side で Supabase client を使ってリフレッシュ
-            try {
-              const supabase = getSupabaseBrowserClient();
-              const { data, error } = await supabase.auth.refreshSession();
-              
-              if (error || !data.session) {
-                console.error("[Analytics] Refresh failed:", error?.message);
-                throw new Error("Token refresh failed - please login again");
-              }
-              
-              const newToken = data.session.access_token;
-              console.log("[Analytics] Token refreshed successfully");
-              
-              // localStorage を更新
-              const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-              if (supabaseUrl) {
-                const projectId = new URL(supabaseUrl).hostname.split(".")[0];
-                const authTokenKey = `sb-${projectId}-auth-token`;
-                const authToken = localStorage.getItem(authTokenKey);
-                if (authToken) {
-                  const parsed = JSON.parse(authToken);
-                  parsed.access_token = newToken;
-                  localStorage.setItem(authTokenKey, JSON.stringify(parsed));
-                }
-              }
-              
-              return newToken;
-            } catch (err) {
-              console.error("[Analytics] Refresh error:", err);
-              throw new Error("Token refresh failed - please login again");
-            }
-          }
-          
-          return token;
-        };
-
-        const validToken = await ensureValidToken();
-        headers.Authorization = `Bearer ${validToken}`;
 
         // 統計情報取得
         const statsRes = await fetch("/api/admin/analytics", { headers });
@@ -179,7 +104,7 @@ export default function AdminAnalyticsPage() {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   if (loading) {
     return (
