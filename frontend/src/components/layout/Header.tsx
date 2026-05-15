@@ -15,6 +15,7 @@ const navigationItems = [
 
 export function Header() {
   const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
   const isNavItemActive = (href: string) => {
     if (href === "/") {
       return pathname === "/";
