@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
 
 import { Container } from "@/components/ui/Container";
+import { isAdminEmail } from "@/lib/auth-utils";
 
 const footerLinks = [
   { label: "Contact", href: "/contact" },
@@ -10,7 +13,30 @@ const footerLinks = [
   { label: "Terms", href: "/terms" },
 ];
 
-export function Footer() {
+export async function Footer() {
+  // サーバーサイドで Supabase セッションを確認
+  const reqCookies = await cookies();
+  const cookieList = reqCookies.getAll();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
+    {
+      cookies: {
+        getAll() {
+          return cookieList;
+        },
+        setAll() {
+          // no-op for server-rendered footer (we only need to read session)
+        },
+      } as any,
+    }
+  );
+  const { data } = await supabase.auth.getUser();
+  const user = data?.user ?? null;
+
+  const showAdminButton = isAdminEmail(user?.email ?? null);
+
   return (
     <footer className="border-t border-border bg-white">
       <Container className="py-12">
@@ -30,6 +56,15 @@ export function Footer() {
                 {item.label}
               </Link>
             ))}
+
+            {showAdminButton && (
+              <Link
+                href="/admin"
+                className="ml-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-2 text-sm font-medium text-violet-700 hover:bg-violet-100"
+              >
+                管理へ
+              </Link>
+            )}
           </div>
         </div>
       </Container>
