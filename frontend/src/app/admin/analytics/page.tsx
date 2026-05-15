@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 interface CompanyAccess {
@@ -67,7 +67,6 @@ export default function AdminAnalyticsPage() {
         
         if (!authToken) {
           // 別の形式を試す
-          const fallbackKey = `sb-${projectId}-auth-token-code-verifier`;
           const allKeys = Object.keys(localStorage).filter(k => k.includes('auth') || k.includes('sb'));
           console.log("[Analytics] Alternative keys found:", allKeys);
           throw new Error("Not authenticated - no auth token in localStorage");

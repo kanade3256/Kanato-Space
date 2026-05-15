@@ -20,7 +20,7 @@ type CookieToSet = {
 /**
  * 管理者認証をチェック（Authorization ヘッダーから Bearer token を取得）
  */
-async function checkAdminAuth(request: NextRequest): Promise<{ email: string } | null> {
+async function checkAdminAuth(request: NextRequest): Promise<{ email: string | null } | null> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -80,7 +80,7 @@ async function checkAdminAuth(request: NextRequest): Promise<{ email: string } |
   }
 
   console.log(`checkAdminAuth: Admin user authenticated: ${user.email}`);
-  return { email: user.email };
+  return { email: user.email ?? null };
 }
 
 /**

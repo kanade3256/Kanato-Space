@@ -6,9 +6,9 @@ import { getPostBySlug, getPostsByType } from "@/features/posts/posts";
 import { siteUrl } from "@/lib/site";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export function generateStaticParams() {
@@ -20,13 +20,14 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = await getPostBySlug("Blog", params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug("Blog", slug);
 
   if (!post) {
     return {
       title: "記事が見つかりません | Kanato Space",
       alternates: {
-        canonical: `${siteUrl}/blog/${params.slug}`,
+        canonical: `${siteUrl}/blog/${slug}`,
       },
     };
   }
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
-  const post = await getPostBySlug("Blog", params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug("Blog", slug);
 
   if (!post) {
     notFound();
